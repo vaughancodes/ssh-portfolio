@@ -2,12 +2,6 @@
 
 A terminal-based portfolio served over SSH, built with Go and the [Charm](https://charm.sh) ecosystem.
 
-Anyone can view the portfolio by running:
-
-```
-ssh -p 23234 your-server.com
-```
-
 ## Features
 
 - Tabbed navigation across **About**, **Experience**, **Projects**, **Skills**, **Education**, and **Contact** sections
@@ -23,17 +17,17 @@ ssh -p 23234 your-server.com
 - [Lip Gloss](https://github.com/charmbracelet/lipgloss) — styling and layout
 - [Bubbles](https://github.com/charmbracelet/bubbles) — pre-built TUI components (viewport)
 
-## Running
+## Running Locally
 
 ```bash
 go build -o ssh-portfolio .
 ./ssh-portfolio
 ```
 
-The server starts on `0.0.0.0:23234` by default. Connect with:
+The server starts on `0.0.0.0:21` by default. Connect with:
 
 ```bash
-ssh -p 23234 localhost
+ssh -p 21 localhost
 ```
 
 To use a different port:
@@ -43,6 +37,18 @@ To use a different port:
 ```
 
 A host key is generated automatically in `.ssh/id_ed25519` on first run.
+
+## Running via Docker Compose
+
+Populate `.env` with a listening port:
+```bash
+LISTEN_PORT=2222
+```
+
+Then, run via Docker Compose:
+```bash
+docker compose up --build
+```
 
 ## Controls
 
