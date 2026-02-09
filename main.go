@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"flag"
 	"fmt"
 	"log"
 	"os"
@@ -17,14 +18,14 @@ import (
 	"github.com/charmbracelet/wish/logging"
 )
 
-const (
-	host = "0.0.0.0"
-	port = 23234
-)
+const host = "0.0.0.0"
 
 func main() {
+	port := flag.Int("p", 23234, "port to listen on")
+	flag.Parse()
+
 	s, err := wish.NewServer(
-		wish.WithAddress(fmt.Sprintf("%s:%d", host, port)),
+		wish.WithAddress(fmt.Sprintf("%s:%d", host, *port)),
 		wish.WithHostKeyPath(".ssh/id_ed25519"),
 		wish.WithMiddleware(
 			bubbletea.Middleware(teaHandler),
@@ -39,8 +40,8 @@ func main() {
 	done := make(chan os.Signal, 1)
 	signal.Notify(done, os.Interrupt, syscall.SIGTERM)
 
-	log.Printf("Starting SSH server on %s:%d", host, port)
-	log.Printf("Connect with: ssh -p %d localhost", port)
+	log.Printf("Starting SSH server on %s:%d", host, *port)
+	log.Printf("Connect with: ssh -p %d localhost", *port)
 
 	go func() {
 		if err := s.ListenAndServe(); err != nil {
