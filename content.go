@@ -108,7 +108,7 @@ var projects = []Project{
 		Name:        "web-portfolio",
 		Description: "A React-based terminal-themed portfolio inspired by the SSH version.",
 		Tech:        []string{"React", "TypeScript", "Vite"},
-		URL:         "github.com/vaughancodes/vaughan.codes",
+		URL:         "github.com/vaughancodes/web-portfolio",
 	},
 }
 

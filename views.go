@@ -141,7 +141,7 @@ func renderProjects(s styles, width int) string {
 		for _, t := range proj.Tech {
 			tags = append(tags, s.tag.Render(t))
 		}
-		tagLine := lipgloss.JoinHorizontal(lipgloss.Top, tags...)
+		tagLine := strings.Join(tags, " ")
 
 		url := s.dimText.Render("→ ") + s.secondaryText.Render(hyperlink("https://"+proj.URL, proj.URL))
 
@@ -180,7 +180,7 @@ func renderSkills(s styles, width int) string {
 		for _, sk := range group.Skills {
 			tags = append(tags, s.tag.Render(sk))
 		}
-		b.WriteString("  " + lipgloss.JoinHorizontal(lipgloss.Top, tags...))
+		b.WriteString("  " + strings.Join(tags, " "))
 		b.WriteString("\n")
 
 		if i < len(skillGroups)-1 {
