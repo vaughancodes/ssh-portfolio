@@ -2,7 +2,7 @@ services:
   ssh-portfolio:
     build: .
     ports:
-      - "${LISTEN_PORT}:21"
+      - "${LISTEN_PORT}:22"
     volumes:
       - host-keys:/app/.ssh
     restart: unless-stopped
