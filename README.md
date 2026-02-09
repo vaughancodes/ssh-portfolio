@@ -24,7 +24,7 @@ go build -o ssh-portfolio .
 ./ssh-portfolio
 ```
 
-The server starts on `0.0.0.0:21` by default. Connect with:
+The server starts on `0.0.0.0:22` by default. Connect with:
 
 ```bash
 ssh -p 21 localhost
