@@ -100,9 +100,15 @@ var experiences = []Experience{
 var projects = []Project{
 	{
 		Name:        "ssh-portfolio",
-		Description: "This very portfolio! A terminal-based portfolio served over SSH, built with Go and the Charm ecosystem.",
+		Description: "This very site! A terminal-based portfolio served over SSH, built with Go and the Charm ecosystem.",
 		Tech:        []string{"Go", "Wish", "Bubble Tea", "Lip Gloss"},
 		URL:         "github.com/vaughancodes/ssh-portfolio",
+	},
+	{
+		Name:        "web-portfolio",
+		Description: "A React-based terminal-themed portfolio inspired by the SSH version.",
+		Tech:        []string{"React", "TypeScript", "Vite"},
+		URL:         "github.com/vaughancodes/vaughan.codes",
 	},
 }
 
@@ -142,7 +148,7 @@ var contacts = []ContactInfo{
 	{Label: "Email", Value: "daniel@vaughan.codes"},
 	{Label: "Phone", Value: "(336) 380-3600"},
 	{Label: "Office", Value: "(765) 201-4560"},
-	{Label: "Website", Value: "vaughan.codes"},
+	{Label: "Portfolio", Value: "vaughan.codes"},
 	{Label: "GitHub", Value: "github.com/vaughancodes"},
 	{Label: "LinkedIn", Value: "linkedin.com/in/vaughancodes"},
 	{Label: "Location", Value: "West Lafayette, IN"},

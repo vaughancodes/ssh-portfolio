@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"regexp"
 	"strings"
 
 	"github.com/charmbracelet/lipgloss"
@@ -26,13 +27,15 @@ func hyperlink(url, text string) string {
 	return fmt.Sprintf("\x1b]8;;%s\x1b\\%s\x1b]8;;\x1b\\", url, text)
 }
 
+var nonDigitRe = regexp.MustCompile(`[^\d+]`)
+
 // urlFor returns a full URL for a contact value.
 func urlFor(label, value string) string {
 	switch label {
 	case "Email":
 		return "mailto:" + value
-	case "Website":
-		return "https://" + value
+	case "Phone", "Office":
+		return "tel:" + nonDigitRe.ReplaceAllString(value, "")
 	case "GitHub", "LinkedIn":
 		return "https://" + value
 	default:
@@ -230,7 +233,7 @@ func renderContact(s styles, width int) string {
 
 	iconMap := map[string]string{
 		"Email": "✉", "Phone": "☎", "Office": "☏",
-		"Website": "⌂", "GitHub": "◆", "LinkedIn": "∞", "Location": "◉",
+		"Portfolio": "⌂", "GitHub": "◆", "LinkedIn": "∞", "Location": "◉",
 	}
 
 	labelColors := []lipgloss.Color{pink, green, green, secondary, muted, accent, orange}
@@ -242,14 +245,29 @@ func renderContact(s styles, width int) string {
 		}
 		color := labelColors[i%len(labelColors)]
 		styledIcon := s.r.NewStyle().Foreground(color).Bold(true).Render(icon)
-		styledLabel := s.r.NewStyle().Foreground(color).Bold(true).Width(10).Render(c.Label)
-		valueText := c.Value
-		if u := urlFor(c.Label, c.Value); u != "" {
-			valueText = hyperlink(u, c.Value)
-		}
-		styledValue := s.r.NewStyle().Foreground(textColor).Bold(true).Render(valueText)
+		styledLabel := s.r.NewStyle().Foreground(color).Bold(true).Width(12).Render(c.Label)
 
-		b.WriteString(fmt.Sprintf("  %s  %s  %s\n", styledIcon, styledLabel, styledValue))
+		if c.Label == "Portfolio" {
+			valuePart := s.r.NewStyle().Foreground(textColor).Bold(true).Render(
+				hyperlink("https://"+c.Value, c.Value),
+			)
+			httpsLink := s.r.NewStyle().Foreground(textColor).Bold(true).Render(
+				hyperlink("https://"+c.Value, "HTTPS"),
+			)
+			sshLink := s.r.NewStyle().Foreground(textColor).Bold(true).Render(
+				hyperlink("ssh://"+c.Value, "SSH"),
+			)
+			suffix := s.dimText.Render(" (") + httpsLink + s.dimText.Render(" or ") + sshLink + s.dimText.Render(")") +
+				s.dimText.Render("\t// you're already here!")
+			b.WriteString(fmt.Sprintf("  %s  %s  %s%s\n", styledIcon, styledLabel, valuePart, suffix))
+		} else {
+			valueText := c.Value
+			if u := urlFor(c.Label, c.Value); u != "" {
+				valueText = hyperlink(u, c.Value)
+			}
+			styledValue := s.r.NewStyle().Foreground(textColor).Bold(true).Render(valueText)
+			b.WriteString(fmt.Sprintf("  %s  %s  %s\n", styledIcon, styledLabel, styledValue))
+		}
 	}
 
 	b.WriteString("\n")

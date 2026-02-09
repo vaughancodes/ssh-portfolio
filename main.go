@@ -21,7 +21,7 @@ import (
 const host = "0.0.0.0"
 
 func main() {
-	port := flag.Int("p", 23234, "port to listen on")
+	port := flag.Int("p", 21, "port to listen on")
 	flag.Parse()
 
 	s, err := wish.NewServer(

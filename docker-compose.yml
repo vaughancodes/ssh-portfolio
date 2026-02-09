@@ -1,0 +1,13 @@
+services:
+  ssh-portfolio:
+    build: .
+    ports:
+      - "${LISTEN_PORT}:21"
+    volumes:
+      - host-keys:/app/.ssh
+    restart: unless-stopped
+    env_file:
+      - .env
+
+volumes:
+  host-keys:
