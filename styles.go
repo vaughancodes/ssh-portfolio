@@ -32,6 +32,7 @@ type styles struct {
 	orangeText    lipgloss.Style
 	tag           lipgloss.Style
 	activeTab     lipgloss.Style
+	hoverTab      lipgloss.Style
 	inactiveTab   lipgloss.Style
 	footerKey     lipgloss.Style
 	footerDesc    lipgloss.Style
@@ -90,6 +91,11 @@ func newStyles(r *lipgloss.Renderer) styles {
 			Foreground(lipgloss.Color("#FFFFFF")).
 			Background(accent).
 			Padding(0, 2),
+		hoverTab: r.NewStyle().
+			Bold(true).
+			Foreground(textColor).
+			Background(subtle).
+			Padding(0, 2),
 		inactiveTab: r.NewStyle().
 			Foreground(muted).
 			Padding(0, 2),
@@ -108,12 +114,15 @@ func newStyles(r *lipgloss.Renderer) styles {
 	}
 }
 
-func (s styles) renderTabBar(tabs []string, active int, width int) string {
+func (s styles) renderTabBar(tabs []string, active, hover, width int) string {
 	var rendered []string
 	for i, t := range tabs {
-		if i == active {
+		switch {
+		case i == active:
 			rendered = append(rendered, s.activeTab.Render(t))
-		} else {
+		case i == hover:
+			rendered = append(rendered, s.hoverTab.Render(t))
+		default:
 			rendered = append(rendered, s.inactiveTab.Render(t))
 		}
 	}

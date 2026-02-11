@@ -12,6 +12,7 @@ var tabNames = []string{"About", "Experience", "Projects", "Skills", "Education"
 
 type model struct {
 	activeTab int
+	hoverTab  int
 	tabs      []string
 	viewport  viewport.Model
 	width     int
@@ -22,10 +23,11 @@ type model struct {
 
 func newModel(width, height int, r *lipgloss.Renderer) model {
 	return model{
-		tabs:   tabNames,
-		width:  width,
-		height: height,
-		styles: newStyles(r),
+		tabs:     tabNames,
+		hoverTab: -1,
+		width:    width,
+		height:   height,
+		styles:   newStyles(r),
 	}
 }
 
@@ -75,6 +77,22 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 			m.viewport.GotoTop()
 			return m, nil
 		}
+
+	case tea.MouseMsg:
+		if msg.Y <= 1 {
+			m.hoverTab = m.tabHitTest(msg.X)
+		} else {
+			m.hoverTab = -1
+		}
+
+		if msg.Action == tea.MouseActionPress && msg.Button == tea.MouseButtonLeft {
+			if m.hoverTab >= 0 && m.hoverTab != m.activeTab {
+				m.activeTab = m.hoverTab
+				m.viewport.SetContent(m.currentTabContent())
+				m.viewport.GotoTop()
+				return m, nil
+			}
+		}
 	}
 
 	if m.ready {
@@ -89,11 +107,22 @@ func (m model) View() string {
 		return "\n  Initializing..."
 	}
 
-	tabBar := m.styles.renderTabBar(m.tabs, m.activeTab, m.width)
+	tabBar := m.styles.renderTabBar(m.tabs, m.activeTab, m.hoverTab, m.width)
 	content := m.styles.contentBox.Render(m.viewport.View())
 	footer := m.styles.renderFooter(m.width)
 
 	return lipgloss.JoinVertical(lipgloss.Left, tabBar, content, footer)
+}
+
+func (m model) tabHitTest(x int) int {
+	for i, name := range m.tabs {
+		tabWidth := len(name) + 4 // padding(0,2) adds 4
+		if x < tabWidth {
+			return i
+		}
+		x -= tabWidth
+	}
+	return -1
 }
 
 func (m model) currentTabContent() string {
