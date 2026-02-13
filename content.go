@@ -99,16 +99,16 @@ var experiences = []Experience{
 
 var projects = []Project{
 	{
-		Name:        "ssh-portfolio",
-		Description: "This very site! A terminal-based portfolio served over SSH, built with Go and the Charm ecosystem.",
-		Tech:        []string{"Go", "Wish", "Bubble Tea", "Lip Gloss"},
-		URL:         "github.com/vaughancodes/ssh-portfolio",
+		Name:        "Triarb Detector",
+		Description: "Tool for detecting triangular arbitrage opportunities across multiple crypto exchanges.",
+		Tech:        []string{"Python", "ccxt", "NetworkX"},
+		URL:         "github.com/vaughancodes/triarb-detector",
 	},
 	{
-		Name:        "web-portfolio",
-		Description: "A React-based terminal-themed portfolio inspired by the SSH version.",
-		Tech:        []string{"React", "TypeScript", "Vite"},
-		URL:         "github.com/vaughancodes/web-portfolio",
+		Name:        "Do I Own It?",
+		Description: "Web application for tracking owned physical media.",
+		Tech:        []string{"Python", "Flask", "SQLAlchemy", "PostgreSQL"},
+		URL:         "github.com/vaughancodes/do-i-own-it",
 	},
 	{
 		Name:        "Suipi",
@@ -117,22 +117,22 @@ var projects = []Project{
 		URL:         "github.com/vaughancodes/Suipi",
 	},
 	{
-		Name:        "triarb-detector",
-		Description: "Tool for detecting triangular arbitrage opportunities across multiple crypto exchanges.",
-		Tech:        []string{"Python", "ccxt", "NetworkX"},
-		URL:         "github.com/vaughancodes/triarb-detector",
+		Name:        "SSH Portfolio",
+		Description: "This very site! A terminal-based portfolio served over SSH, built with Go and the Charm ecosystem.",
+		Tech:        []string{"Go", "Wish", "Bubble Tea", "Lip Gloss"},
+		URL:         "github.com/vaughancodes/ssh-portfolio",
 	},
 	{
-		Name:        "arduino-uno-cw-keyer",
+		Name:        "Web Portfolio",
+		Description: "A React-based terminal-themed portfolio inspired by the SSH version.",
+		Tech:        []string{"React", "TypeScript", "Vite"},
+		URL:         "github.com/vaughancodes/web-portfolio",
+	},
+	{
+		Name:        "Arduino UNO CW Keyer",
 		Description: "Sketches and diagrams for utilizing an Arduino UNO (or compatibles) as a CW keyer.",
 		Tech:        []string{"C++", "Arduino"},
 		URL:         "github.com/vaughancodes/arduino-uno-cw-keyer",
-	},
-	{
-		Name:        "do-i-own-it",
-		Description: "Web application for tracking owned physical media.",
-		Tech:        []string{"Python", "Flask", "SQLAlchemy", "PostgreSQL"},
-		URL:         "github.com/vaughancodes/do-i-own-it",
 	},
 }
 

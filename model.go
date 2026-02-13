@@ -8,7 +8,7 @@ import (
 
 var _ tea.Model = model{}
 
-var tabNames = []string{"About", "Experience", "Projects", "Skills", "Education", "Contact"}
+var tabNames = []string{"About", "Experience", "Projects", "Education", "Skills", "Contact"}
 
 type model struct {
 	activeTab int
@@ -136,9 +136,9 @@ func (m model) currentTabContent() string {
 	case 2:
 		return renderProjects(s, w)
 	case 3:
-		return renderSkills(s, w)
-	case 4:
 		return renderEducation(s, w)
+	case 4:
+		return renderSkills(s, w)
 	case 5:
 		return renderContact(s, w)
 	default:

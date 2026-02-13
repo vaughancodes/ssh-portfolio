@@ -144,11 +144,24 @@ func (s styles) renderFooter(width int) string {
 	}
 	sep := s.dimText.Render("  •  ")
 	line := parts[0] + sep + parts[1] + sep + parts[2]
+
+	copyright := s.dimText.Render("© Daniel Vaughan 2026")
+
+	left := s.r.NewStyle().
+		Width(width / 2).
+		Align(lipgloss.Center).
+		Render(line)
+
+	right := s.r.NewStyle().
+		Width(width / 2).
+		Align(lipgloss.Right).
+		Render(copyright)
+
+	row := lipgloss.JoinHorizontal(lipgloss.Top, left, right)
 	return s.r.NewStyle().
 		Width(width).
-		Align(lipgloss.Center).
 		MarginTop(1).
-		Render(line)
+		Render(row)
 }
 
 func repeat(s string, n int) string {
